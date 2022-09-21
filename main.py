@@ -17,6 +17,18 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
+def get_token():
+  url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+ app_id +"&secret=" + app_secret
+  res = requests.get(url).json()
+  access_token = res['access_token']
+  return access_token
+
+def get_userId():
+  token = get_token()
+  url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token="+ token +"&next_openid="
+  res = requests.get(url).json()
+  openidArr = res['data']['openid']
+  return openidArr
 
 def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
@@ -49,5 +61,8 @@ client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
 data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
-res = wm.send_template(user_id, template_id, data)
-print(res)
+
+openidArr = get_userId()
+for index in range(len(openidArr)):
+   res = wm.send_template(openidArr[index], template_id, data)
+   print(res)
