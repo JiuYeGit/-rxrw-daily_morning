@@ -1,8 +1,7 @@
 from datetime import date, datetime
-import math
+import math, Fore
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
-import init, Fore
 from zhdate import ZhDate
 import requests
 import os
