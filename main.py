@@ -66,21 +66,21 @@ def get_week_day(date):
     day = date.weekday()
     return week_day_dict[day]
 def time_parse(today):
-    distance_year = (datetime.datetime.strptime(f"{today.year}-01-01", "%Y-%m-%d").date() - today).days
+    distance_year = (datetime.strptime(f"{today.year}-01-01", "%Y-%m-%d").date() - today).days
     distance_year = distance_year if distance_year > 0 else (
-            datetime.datetime.strptime(f"{today.year + 1}-01-01", "%Y-%m-%d").date() - today).days
+            datetime.strptime(f"{today.year + 1}-01-01", "%Y-%m-%d").date() - today).days
 
     distance_big_year = (ZhDate(today.year, 1, 1).to_datetime().date() - today).days
     distance_big_year = distance_big_year if distance_big_year > 0 else (
             ZhDate(today.year + 1, 1, 1).to_datetime().date() - today).days
 
-    distance_4_5 = (datetime.datetime.strptime(f"{today.year}-04-05", "%Y-%m-%d").date() - today).days
+    distance_4_5 = (datetime.strptime(f"{today.year}-04-05", "%Y-%m-%d").date() - today).days
     distance_4_5 = distance_4_5 if distance_4_5 > 0 else (
-            datetime.datetime.strptime(f"{today.year + 1}-04-05", "%Y-%m-%d").date() - today).days
+            datetime.strptime(f"{today.year + 1}-04-05", "%Y-%m-%d").date() - today).days
 
-    distance_5_1 = (datetime.datetime.strptime(f"{today.year}-05-01", "%Y-%m-%d").date() - today).days
+    distance_5_1 = (datetime.strptime(f"{today.year}-05-01", "%Y-%m-%d").date() - today).days
     distance_5_1 = distance_5_1 if distance_5_1 > 0 else (
-            datetime.datetime.strptime(f"{today.year + 1}-05-01", "%Y-%m-%d").date() - today).days
+            datetime.strptime(f"{today.year + 1}-05-01", "%Y-%m-%d").date() - today).days
 
     distance_5_5 = (ZhDate(today.year, 5, 5).to_datetime().date() - today).days
     distance_5_5 = distance_5_5 if distance_5_5 > 0 else (
@@ -90,9 +90,9 @@ def time_parse(today):
     distance_8_15 = distance_8_15 if distance_8_15 > 0 else (
             ZhDate(today.year + 1, 8, 15).to_datetime().date() - today).days
 
-    distance_10_1 = (datetime.datetime.strptime(f"{today.year}-10-01", "%Y-%m-%d").date() - today).days
+    distance_10_1 = (datetime.strptime(f"{today.year}-10-01", "%Y-%m-%d").date() - today).days
     distance_10_1 = distance_10_1 if distance_10_1 > 0 else (
-            datetime.datetime.strptime(f"{today.year + 1}-10-01", "%Y-%m-%d").date() - today).days
+            datetime.strptime(f"{today.year + 1}-10-01", "%Y-%m-%d").date() - today).days
 
     # print("距离周末: ", 5 - today.weekday())
     # print("距离元旦: ", distance_year)
@@ -137,7 +137,7 @@ time_ = time_parse(today)
 for t_ in time_:
    if t_.get("v_") >= 0:
       holiday = '\t\t 距离{}还有:{}天'.format(t_.get("title"), t_.get("v_"))
-      
+
 
 date_new = '{}年{}月{}日 {}'.format(today.year, today.month, today.day, get_week_day(today))
 
