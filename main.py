@@ -2,6 +2,8 @@ from datetime import date, datetime
 import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
+from colorama import init, Fore
+from zhdate import ZhDate
 import requests
 import os
 import random
@@ -52,15 +54,106 @@ def get_words():
     return get_words()
   return words.json()['data']['text']
 
+def get_week_day(date):
+    week_day_dict = {
+        0: '星期一',
+        1: '星期二',
+        2: '星期三',
+        3: '星期四',
+        4: '星期五',
+        5: '星期六',
+        6: '星期天',
+    }
+    day = date.weekday()
+    return week_day_dict[day]
+def time_parse(today):
+    distance_year = (datetime.datetime.strptime(f"{today.year}-01-01", "%Y-%m-%d").date() - today).days
+    distance_year = distance_year if distance_year > 0 else (
+            datetime.datetime.strptime(f"{today.year + 1}-01-01", "%Y-%m-%d").date() - today).days
+
+    distance_big_year = (ZhDate(today.year, 1, 1).to_datetime().date() - today).days
+    distance_big_year = distance_big_year if distance_big_year > 0 else (
+            ZhDate(today.year + 1, 1, 1).to_datetime().date() - today).days
+
+    distance_4_5 = (datetime.datetime.strptime(f"{today.year}-04-05", "%Y-%m-%d").date() - today).days
+    distance_4_5 = distance_4_5 if distance_4_5 > 0 else (
+            datetime.datetime.strptime(f"{today.year + 1}-04-05", "%Y-%m-%d").date() - today).days
+
+    distance_5_1 = (datetime.datetime.strptime(f"{today.year}-05-01", "%Y-%m-%d").date() - today).days
+    distance_5_1 = distance_5_1 if distance_5_1 > 0 else (
+            datetime.datetime.strptime(f"{today.year + 1}-05-01", "%Y-%m-%d").date() - today).days
+
+    distance_5_5 = (ZhDate(today.year, 5, 5).to_datetime().date() - today).days
+    distance_5_5 = distance_5_5 if distance_5_5 > 0 else (
+            ZhDate(today.year + 1, 5, 5).to_datetime().date() - today).days
+
+    distance_8_15 = (ZhDate(today.year, 8, 15).to_datetime().date() - today).days
+    distance_8_15 = distance_8_15 if distance_8_15 > 0 else (
+            ZhDate(today.year + 1, 8, 15).to_datetime().date() - today).days
+
+    distance_10_1 = (datetime.datetime.strptime(f"{today.year}-10-01", "%Y-%m-%d").date() - today).days
+    distance_10_1 = distance_10_1 if distance_10_1 > 0 else (
+            datetime.datetime.strptime(f"{today.year + 1}-10-01", "%Y-%m-%d").date() - today).days
+
+    # print("距离周末: ", 5 - today.weekday())
+    # print("距离元旦: ", distance_year)
+    # print("距离大年: ", distance_big_year)
+    # print("距离清明: ", distance_4_5)
+    # print("距离劳动: ", distance_5_1)
+    # print("距离端午: ", distance_5_5)
+    # print("距离中秋: ", distance_8_15)
+    # print("距离国庆: ", distance_10_1)
+
+    time_ = [
+        {"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
+        {"v_": distance_year, "title": "元旦"}, # 距离元旦
+        {"v_": distance_big_year, "title": "过年"}, # 距离过年
+        {"v_": distance_4_5, "title": "清明节"}, # 距离清明
+        {"v_": distance_5_1, "title": "劳动节"}, # 距离劳动
+        {"v_": distance_5_5, "title": "端午节"}, # 距离端午
+        {"v_": distance_8_15, "title": "中秋节"}, # 距离中秋
+        {"v_": distance_10_1, "title": "国庆节"}, # 距离国庆
+    ]
+
+    time_ = sorted(time_, key=lambda x: x['v_'], reverse=False)
+    return time_
+
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
+def get_du():
+  du = requests.get("https://api.shadiao.pro/du")
+  if du.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
+
+def get_pyq():
+  pyq = requests.get("https://api.shadiao.pro/pyq")
+  if pyq.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
+
+today = datetime.date.today()
+time_ = time_parse(today)
+for t_ in time_:
+        if t_.get("v_") >= 0
+        holiday = '\t\t {}距离{}还有:{}天'.format(Fore.RED, t_.get("title"), t_.get("v_"))
+
+
+date_new = '{}年{}月{}日 {}'.format(today.year, today.month, today.day, get_week_day(today))
+
 
 client = WeChatClient(app_id, app_secret)
-
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {
+"weather":{"value":wea},"temperature":{"value":temperature},
+"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},
+"words":{"value":get_words(), "color":get_random_color()},
+"date_new":{"value":date_new},"holiday":{"value":holiday},
+"soup":{"value":get_du(), "writing":get_pyq()}
+}
+
 
 openidArr = get_userId()
 for index in range(len(openidArr)):
