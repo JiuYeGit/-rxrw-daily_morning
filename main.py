@@ -136,9 +136,8 @@ def get_pyq():
 today = datetime.date.today()
 time_ = time_parse(today)
 for t_ in time_:
-        if t_.get("v_") >= 0
+        if t_.get("v_") >= 0:
         holiday = '\t\t {}距离{}还有:{}天'.format(Fore.RED, t_.get("title"), t_.get("v_"))
-
 
 date_new = '{}年{}月{}日 {}'.format(today.year, today.month, today.day, get_week_day(today))
 
