@@ -132,7 +132,7 @@ def get_pyq():
     return get_words()
   return words.json()['data']['text']
 
-today = datetime.date.today()
+today = date.today()
 time_ = time_parse(today)
 for t_ in time_:
    if t_.get("v_") >= 0:
