@@ -79,7 +79,7 @@ def time_parse(today):
    if distance_4_5 < 0 :
         (datetime.strptime(str(today.year + 1) + "-04-05", "%Y-%m-%d").date() - today).days
 
-   distance_5_1 = (datetime.datetime.strptime(str(today.year) + "-05-01", "%Y-%m-%d").date() - today).days
+   distance_5_1 = (datetime.strptime(str(today.year) + "-05-01", "%Y-%m-%d").date() - today).days
    if distance_5_1 < 0 :
         (datetime.strptime(str(today.year + 1) + "-05-01", "%Y-%m-%d").date() - today).days
 
@@ -91,9 +91,9 @@ def time_parse(today):
    if distance_8_15 < 0 :
         (ZhDate(today.year + 1, 8, 15).to_datetime().date() - today).days
 
-   distance_10_1 = (datetime.datetime.strptime(str(today.year) + "-10-01", "%Y-%m-%d").date() - today).days
+   distance_10_1 = (datetime.strptime(str(today.year) + "-10-01", "%Y-%m-%d").date() - today).days
    if distance_10_1 < 0 :
-        (datetime.datetime.strptime(str(today.year + 1) + "-10-01", "%Y-%m-%d").date() - today).days
+        (datetime.strptime(str(today.year + 1) + "-10-01", "%Y-%m-%d").date() - today).days
 
     # print("距离周末: ", 5 - today.weekday())
     # print("距离元旦: ", distance_year)
@@ -105,7 +105,7 @@ def time_parse(today):
     # print("距离国庆: ", distance_10_1)
 
    time_ = [
-		{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
+	{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
         {"v_": distance_year, "title": "元旦"}, # 距离元旦
         {"v_": distance_big_year, "title": "过年"}, # 距离过年
         {"v_": distance_4_5, "title": "清明节"}, # 距离清明
