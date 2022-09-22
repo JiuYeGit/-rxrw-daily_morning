@@ -151,7 +151,7 @@ wm = WeChatMessage(client)
 wea, temperature = get_weather()
 data = {
 "weather":{"value":wea},"temperature":{"value":temperature},
-"love_days":{"value":get_count()}, "color":get_random_color()},
+"love_days":{"value":get_count()}, "color":{get_random_color()},
 "date_new":{"value":date_new},"holiday":{"value":holiday},
 "soup":{"value":get_du()}, "writing":{"value":get_pyq()}
 }
