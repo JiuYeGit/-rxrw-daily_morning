@@ -124,17 +124,6 @@ def time_parse(today):
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
-def get_du():
-  du = requests.get("https://api.shadiao.pro/du")
-  if du.status_code != 200:
-    return get_du()
-  return du.json()['data']['text']
-
-def get_pyq():
-  pyq = requests.get("https://api.shadiao.pro/pyq")
-  if pyq.status_code != 200:
-    return get_pyq()
-  return pyq.json()['data']['text']
 
 holiday = ''
 today = dt.datetime.today()
