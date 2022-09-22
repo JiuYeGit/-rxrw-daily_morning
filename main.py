@@ -37,9 +37,8 @@ def get_weather():
   return weather['weather'], math.floor(weather['temp'])
 
 def get_count():
-#   delta = today - datetime(start_date, "%Y-%m-%d")
-#   return delta.days
-    return 11
+  delta = today - dt.datetime.strptime(start_date, "%Y-%m-%d")
+  return delta.days
 
 def get_birthday():
     return 123
@@ -106,7 +105,7 @@ def time_parse(today):
     # print("距离国庆: ", distance_10_1)
 
    time_ = [
-		{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
+	{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
         {"v_": distance_year, "title": "元旦"}, # 距离元旦
         {"v_": distance_big_year, "title": "过年"}, # 距离过年
         {"v_": distance_4_5, "title": "清明节"}, # 距离清明
@@ -153,9 +152,8 @@ wea, temperature = get_weather()
 data = {
 "weather":{"value":wea},"temperature":{"value":temperature},
 "love_days":{"value":get_count()},"date_new":{"value":date_new},"holiday":{"value":holiday},
-"soup":{"value":get_du()}, "writing":{"value":get_pyq()}, "color":{"value":get_random_color()}
+"soup":{"value":get_du(),"color":get_random_color()}, "writing":{"value":get_pyq(),"color":get_random_color()}
 }
-
 
 openidArr = get_userId()
 for index in range(len(openidArr)):
