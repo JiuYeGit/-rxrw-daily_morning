@@ -1,4 +1,4 @@
-from datetime import date, datetime
+import datetime as dt
 import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
@@ -7,7 +7,7 @@ import requests
 import os
 import random
 
-today = datetime.now()
+today = dt.now()
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
@@ -38,14 +38,16 @@ def get_weather():
   return weather['weather'], math.floor(weather['temp'])
 
 def get_count():
-  delta = today - datetime.strptime(start_date, "%Y-%m-%d")
-  return delta.days
+#   delta = today - datetime(start_date, "%Y-%m-%d")
+#   return delta.days
+    return 11
 
 def get_birthday():
-  next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
-  if next < datetime.now():
-    next = next.replace(year=next.year + 1)
-  return (next - today).days
+    return 123
+#   next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
+#   if next < datetime.now():
+#     next = next.replace(year=next.year + 1)
+#   return (next - today).days
 
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
@@ -67,33 +69,33 @@ def get_week_day(date):
     return week_day_dict[day]
 
 def time_parse(today):
-   distance_year = (datetime.strptime(str(today.year) + "-01-01", "%Y-%m-%d").date() - today).days
+   distance_year = (dt.datetime.strptime(str(today.year) + "-01-01", "%Y-%m-%d") - today).days
    if distance_year < 0 :
-   		distance_year = (datetime.strptime(str(today.year + 1) + "-01-01", "%Y-%m-%d").date() - today).days
+   		distance_year = (dt.datetime.strptime(str(today.year + 1) + "-01-01", "%Y-%m-%d") - today).days
 
-   distance_big_year = (ZhDate(today.year, 1, 1).to_datetime().date() - today).days
+   distance_big_year = (ZhDate(today.year, 1, 1).to_datetime() - today).days
    if distance_big_year < 0 :
-        (ZhDate((today.year + 1), 1, 1).to_datetime().date() - today).days
+        (ZhDate((today.year + 1), 1, 1).to_datetime() - today).days
 
-   distance_4_5 = (datetime.strptime(str(today.year) + "-04-05", "%Y-%m-%d").date() - today).days
+   distance_4_5 = (dt.datetime.strptime(str(today.year) + "-04-05", "%Y-%m-%d") - today).days
    if distance_4_5 < 0 :
-        (datetime.strptime(str(today.year + 1) + "-04-05", "%Y-%m-%d").date() - today).days
+        (dt.datetime.strptime(str(today.year + 1) + "-04-05", "%Y-%m-%d") - today).days
 
-   distance_5_1 = (datetime.strptime(str(today.year) + "-05-01", "%Y-%m-%d").date() - today).days
+   distance_5_1 = (dt.datetime.strptime(str(today.year) + "-05-01", "%Y-%m-%d") - today).days
    if distance_5_1 < 0 :
-        (datetime.strptime(str(today.year + 1) + "-05-01", "%Y-%m-%d").date() - today).days
+        (dt.datetime.strptime(str(today.year + 1) + "-05-01", "%Y-%m-%d") - today).days
 
-   distance_5_5 = (ZhDate(today.year, 5, 5).to_datetime().date() - today).days
+   distance_5_5 = (ZhDate(today.year, 5, 5).to_datetime() - today).days
    if distance_5_5 < 0 :
-        (ZhDate(today.year + 1, 5, 5).to_datetime().date() - today).days
+        (ZhDate(today.year + 1, 5, 5).to_datetime() - today).days
 
-   distance_8_15 = (ZhDate(today.year, 8, 15).to_datetime().date() - today).days
+   distance_8_15 = (ZhDate(today.year, 8, 15).to_datetime() - today).days
    if distance_8_15 < 0 :
-        (ZhDate(today.year + 1, 8, 15).to_datetime().date() - today).days
+        (ZhDate(today.year + 1, 8, 15).to_datetime() - today).days
 
-   distance_10_1 = (datetime.strptime(str(today.year) + "-10-01", "%Y-%m-%d").date() - today).days
+   distance_10_1 = (dt.datetime.strptime(str(today.year) + "-10-01", "%Y-%m-%d") - today).days
    if distance_10_1 < 0 :
-        (datetime.strptime(str(today.year + 1) + "-10-01", "%Y-%m-%d").date() - today).days
+        (dt.datetime.strptime(str(today.year + 1) + "-10-01", "%Y-%m-%d") - today).days
 
     # print("距离周末: ", 5 - today.weekday())
     # print("距离元旦: ", distance_year)
@@ -105,7 +107,7 @@ def time_parse(today):
     # print("距离国庆: ", distance_10_1)
 
    time_ = [
-	{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
+		{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
         {"v_": distance_year, "title": "元旦"}, # 距离元旦
         {"v_": distance_big_year, "title": "过年"}, # 距离过年
         {"v_": distance_4_5, "title": "清明节"}, # 距离清明
@@ -114,6 +116,7 @@ def time_parse(today):
         {"v_": distance_8_15, "title": "中秋节"}, # 距离中秋
         {"v_": distance_10_1, "title": "国庆节"}, # 距离国庆
    ]
+
 
    time_ = sorted(time_, key = lambda x: x['v_'], reverse = False)
 
