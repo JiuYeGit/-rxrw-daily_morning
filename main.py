@@ -106,7 +106,7 @@ def time_parse(today):
     # print("距离国庆: ", distance_10_1)
 
    time_ = [
-		{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
+	{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
         {"v_": distance_year, "title": "元旦"}, # 距离元旦
         {"v_": distance_big_year, "title": "过年"}, # 距离过年
         {"v_": distance_4_5, "title": "清明节"}, # 距离清明
@@ -150,12 +150,7 @@ date_new = '{}年{}月{}日 {}'.format(today.year, today.month, today.day, get_w
 client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {
-"weather":{"value":wea},"temperature":{"value":temperature},
-"love_days":{"value":get_count()}, "color":{get_random_color()},
-"date_new":{"value":date_new},"holiday":{"value":'水风扇大'},
-"soup":{"value":get_du()}, "writing":{"value":get_pyq()}
-}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()}, "color":{get_random_color()},"date_new":{"value":date_new},"holiday":{"value":holiday},"soup":{"value":get_du()}, "writing":{"value":get_pyq()}}
 
 
 openidArr = get_userId()
