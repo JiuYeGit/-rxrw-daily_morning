@@ -136,11 +136,12 @@ def get_pyq():
     return get_pyq()
   return pyq.json()['data']['text']
 
+holiday = ''
 today = dt.datetime.today()
 time_ = time_parse(today)
 for t_ in time_:
    if t_.get("v_") >= 0:
-      holiday = '\n 距离{}还有:{}天'.format(t_.get("title"), t_.get("v_"))
+      holiday += '\n 距离{}还有:{}天'.format(t_.get("title"), t_.get("v_"))
 
 
 date_new = '{}年{}月{}日 {}'.format(today.year, today.month, today.day, get_week_day(today))
