@@ -127,14 +127,14 @@ def get_random_color():
 def get_du():
   du = requests.get("https://api.shadiao.pro/du")
   if du.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+    return get_du()
+  return du.json()['data']['text']
 
 def get_pyq():
   pyq = requests.get("https://api.shadiao.pro/pyq")
   if pyq.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+    return get_pyq()
+  return pyq.json()['data']['text']
 
 today = dt.datetime.today()
 time_ = time_parse(today)
