@@ -7,7 +7,6 @@ import requests
 import os
 import random
 
-today = dt.now()
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
@@ -137,7 +136,7 @@ def get_pyq():
     return get_words()
   return words.json()['data']['text']
 
-today = date.today()
+today = dt.datetime.today()
 time_ = time_parse(today)
 for t_ in time_:
    if t_.get("v_") >= 0:
