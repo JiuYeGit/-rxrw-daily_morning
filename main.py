@@ -104,7 +104,7 @@ def time_parse(today):
     # print("距离中秋: ", distance_8_15)
     # print("距离国庆: ", distance_10_1)
 
-	time_ = [
+   time_ = [
 		{"v_": 5 - 1 - today.weekday(), "title": "周末"}, # 距离周末
         {"v_": distance_year, "title": "元旦"}, # 距离元旦
         {"v_": distance_big_year, "title": "过年"}, # 距离过年
@@ -113,8 +113,7 @@ def time_parse(today):
         {"v_": distance_5_5, "title": "端午节"}, # 距离端午
         {"v_": distance_8_15, "title": "中秋节"}, # 距离中秋
         {"v_": distance_10_1, "title": "国庆节"}, # 距离国庆
-	]
-
+   ]
 
    time_ = sorted(time_, key = lambda x: x['v_'], reverse = False)
 
